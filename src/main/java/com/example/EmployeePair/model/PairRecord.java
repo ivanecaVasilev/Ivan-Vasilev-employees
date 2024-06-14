@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class PairRecord {
-    private int employeeOneID;
-    private int employeeTwoID;
-    private int projectID;
+    private int employeeOneId;
+    private int employeeTwoId;
+    private int projectId;
     private long days;
 }

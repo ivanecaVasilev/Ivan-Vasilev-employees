@@ -2,15 +2,14 @@ package com.example.EmployeePair.controller;
 
 import com.example.EmployeePair.model.PairRecord;
 import com.example.EmployeePair.services.FileService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/files")
+@RequestMapping("/api/v1/file")
+@CrossOrigin
 public class FileController {
 
     private final FileService fileService;
@@ -19,8 +18,8 @@ public class FileController {
         this.fileService = fileService;
     }
 
-    @GetMapping()
-    public List<PairRecord> getData(@RequestParam String csvPath) {
-        return fileService.getAllPairs(csvPath);
+    @PostMapping()
+    public List<PairRecord> getData(@RequestBody MultipartFile file ) {
+        return fileService.uploadFileAndGetAllPairs(file);
     }
 }
