@@ -13,9 +13,11 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.ResolverStyle;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.time.format.DateTimeFormatter.*;
 import static java.time.temporal.ChronoUnit.DAYS;
 
 @Service
@@ -159,8 +161,17 @@ public class FileService {
 
     private EmployeeRecord mapToEmployeeRecord(List<String> record) {
         DateTimeFormatterBuilder dateTimeFormatterBuilder = new DateTimeFormatterBuilder()
-                .append(DateTimeFormatter.ofPattern("[MM/dd/yyyy]" + "[dd-MM-yyyy]" + "[yyyy-MM-dd]" + "[uuuu-M-d]"));
-        DateTimeFormatter dateTimeFormatter = dateTimeFormatterBuilder.toFormatter();
+                .append(DateTimeFormatter.ofPattern("[M/d/uuuu]" + "[M/d/uu]" +
+                        "[MM/dd/uuuu]" + "[MM/dd/uu]" +
+                        "[d-M-uuuu]" + "[d-M-uu]" +
+                        "[dd-MM-uuuu]" + "[dd-MM-uu]" +
+                        "[d.MM.uuuu]" + "[d.MM.uu]" +
+                        "[dd.MM.uuuu]" + "[dd.MM.uu]" +
+                        "[dd-MMM-uuuu]" + "[dd-MMM-uu]" +
+                        "[dd.MMM.uuuu]" + "[dd.MMM.uu]" +
+                        "[dd/MMM/uuuu]" + "[dd/MMM/uu]"
+                        ));
+        DateTimeFormatter dateTimeFormatter = dateTimeFormatterBuilder.toFormatter().withResolverStyle(ResolverStyle.STRICT);
         EmployeeRecord employeeRecord = new EmployeeRecord();
         employeeRecord.setEmployeeId(Integer.parseInt(record.get(0)));
         employeeRecord.setProjectId(Integer.parseInt(record.get(1)));
